@@ -22,15 +22,28 @@
 ### Installation
 ```bash
 # Navigate to project
-cd "e:\bk\source\python projects\pyptube"
+cd "[project_folder]\pyptube"
 
-# Install dependencies (if needed)
-pip install pyperclip
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+.\venv\Scripts\activate.bat
+
+# Install dependencies
+pip install -r requirements.txt
 ```
 
 ### Run Application
+
+#### Option 1: Direct Run
 ```bash
 python pyptube.py
+```
+
+#### Option 2: Using Batch File
+```bash
+run_pyptube.bat
 ```
 
 The application will:
@@ -50,6 +63,62 @@ python verify_updated.py
 ```
 
 Results: **14/14 PASS ✅**
+
+### ⏰ Schedule with Windows Task Scheduler
+
+#### Setup Steps:
+
+1. **Open Task Scheduler**
+   - Press `Win + R`, type `taskschd.msc`, press Enter
+
+2. **Create New Task**
+   - Right-click on Task Scheduler (Local) → Select "Create Task..."
+   - Name: `pyptube-clipboard-monitor`
+   - Description: `YouTube clipboard monitoring service`
+   - Check "Run only when user is logged on"
+
+3. **Set Trigger (Schedule)**
+   - Go to "Triggers" tab → Click "New..."
+   - Choose timing:
+     - **At startup**: Select "At system startup"
+     - **At user logon**: Select "At log on" 
+     - **Custom schedule**: Select preferred time/interval
+   - Enable "Repeat task every: 1 day" if needed
+   - Click OK
+
+4. **Set Action (Run Program)**
+   - Go to "Actions" tab → Click "New..."
+   - Program/script: 
+     ```
+     C:\Windows\System32\cmd.exe
+     ```
+   - Add arguments:
+     ```
+     /c "[project_folder]\run_pyptube.bat"
+     ```
+   - Start in (Optional):
+     ```
+     [project_folder]\pyptube
+     ```
+   - Click OK
+
+5. **Additional Settings**
+   - Go to "Settings" tab
+   - Check:
+     - ✅ "Allow task to be run on demand"
+     - ✅ "Run task as soon as possible after a scheduled start is missed"
+     - ✅ "If the task fails, restart every: 10 minutes" (optional)
+   - Click OK
+
+6. **Test Task**
+   - Right-click task → "Run" to test
+   - Check `youtube_links.db` for new entries
+   - Right-click task → "End" to stop
+
+#### Verify Setup:
+- Task Scheduler shows task as "Ready"
+- `youtube_links.db` grows when YouTube links are copied
+- View task output in Event Viewer > Windows Logs > Application
 
 ---
 
