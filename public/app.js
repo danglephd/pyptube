@@ -187,8 +187,17 @@ restoreBtn.addEventListener('click', () => {
   }
 });
 
+// Filter and display only active records
+function filterTableActive() {
+  const activeRows = allRows.filter((row) => row.deleted === 0);
+  displayData(activeRows);
+}
+
 // Copy Active IDs button
 copyActiveBtn.addEventListener('click', () => {
+  // First, filter and display only active records
+  filterTableActive();
+  
   const activeRows = allRows.filter((row) => row.deleted === 0);
   
   if (activeRows.length === 0) {
