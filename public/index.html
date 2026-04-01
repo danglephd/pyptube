@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Links Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>YouTube Links Manager</h1>
+    
+    <div class="controls">
+      <button id="markDeletedBtn" class="btn btn-danger" disabled>Mark as Deleted</button>
+      <button id="restoreBtn" class="btn btn-success" disabled>Restore</button>
+      <button id="copyActiveBtn" class="btn btn-info">Copy Active IDs</button>
+      <span id="loadingSpinner" class="loading" style="display: none;">Loading...</span>
+      <span id="copyMessage" class="copy-message" style="display: none;">Copied to clipboard!</span>
+    </div>
+
+    <div class="table-wrapper">
+      <table id="linksTable">
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox" id="selectAllCheckbox">
+            </th>
+            <th>Video ID</th>
+            <th>YouTube Link</th>
+            <th>Created At</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Data will be populated here -->
+        </tbody>
+      </table>
+    </div>
+
+    <div id="noDataMessage" class="no-data" style="display: none;">
+      <p>No YouTube links found. Database is empty.</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

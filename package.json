@@ -1,0 +1,14 @@
+{
+  "name": "youtube-links-app",
+  "version": "1.0.0",
+  "description": "Simple web app to manage YouTube links stored in SQLite",
+  "main": "BE/server.js",
+  "scripts": {
+    "start": "node BE/server.js",
+    "dev": "node BE/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.6"
+  }
+}

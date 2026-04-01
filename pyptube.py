@@ -29,37 +29,9 @@ cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='yout
 table_exists = cursor.fetchone()
 
 if table_exists:
-    # Migrate từ schema cũ sang schema mới
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS youtube_links_new (
-        id TEXT PRIMARY KEY,
-        videoId TEXT UNIQUE NOT NULL,
-        youtubeLink TEXT NOT NULL,
-        createdAt INTEGER NOT NULL,
-        deleted INTEGER DEFAULT 0
-    )
-    """)
-    
-    # Copy dữ liệu cũ nếu có
-    try:
-        cursor.execute("""
-        INSERT INTO youtube_links_new (id, videoId, youtubeLink, createdAt, deleted)
-        SELECT 
-            CAST(id AS TEXT),
-            SUBSTR(url, -11) as videoId,
-            url,
-            CAST(strftime('%s', created_at) * 1000 AS INTEGER),
-            0
-        FROM youtube_links
-        """)
-        conn.commit()
-    except:
-        pass
-    
-    # Xóa bảng cũ và đổi tên bảng mới
-    cursor.execute("DROP TABLE IF EXISTS youtube_links")
-    cursor.execute("ALTER TABLE youtube_links_new RENAME TO youtube_links")
-    conn.commit()
+    # Bảng đã tồn tại, thì tiếp tục sử dụng nó mà không cần xóa
+    pass
+
 else:
     # Tạo bảng mới
     cursor.execute("""
